@@ -76,6 +76,7 @@ export class ReactNativeErrorHandlers implements Integration {
    * Handle erros
    */
   private _handleOnError(): void {
+    alert('handleOnError')
     if (this._options.onerror) {
       let handlingFatal = false;
 
@@ -95,7 +96,7 @@ export class ReactNativeErrorHandlers implements Integration {
           }
           handlingFatal = true;
         }
-
+        alert('ErrorUtils.setGlobalHandler')
         getCurrentHub().withScope(scope => {
           if (isFatal) {
             scope.setLevel(Severity.Fatal);
@@ -110,9 +111,11 @@ export class ReactNativeErrorHandlers implements Integration {
         // Just for a better dev experience
         if (client && !__DEV__) {
           client.flush(client.getOptions().shutdownTimeout || 2000).then(() => {
+            alert('client && !__DEV__')
             defaultHandler(error, isFatal);
           });
         } else {
+          alert('defaultHandler')
           // If there is no client something is fishy, anyway we call the default handler
           defaultHandler(error, isFatal);
         }
